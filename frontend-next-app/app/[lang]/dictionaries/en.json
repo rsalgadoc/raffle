@@ -1,0 +1,78 @@
+{
+  "header": {
+    "logo_alt": "Raffle Site Logo",
+    "nav_raffles": "Raffles",
+    "nav_how_it_works": "How it works?",
+    "nav_contact": "Contact",
+    "cta_button": "Create Giveaway"
+  },
+  "hero": {
+    "title": "Participate in Exciting Raffles",
+    "description": "Discover and join the latest raffles. Your luck awaits!",
+    "recent_raffles": "Recent Raffles",
+    "table_name": "Name",
+    "table_draw_date": "Date",
+    "table_action": "Action",
+    "participate_button": "View",
+    "view_more_raffles": "View more raffles"
+  },
+  "recent_winners": {
+    "title": "Recent Winners",
+    "description": "Meet the lucky winners of our raffles.",
+    "table_name": "Raffle Name",
+    "table_draw_date": "Draw Date",
+    "table_winner": "Winner",
+    "table_action": "Action",
+    "view_button": "View",
+    "view_more_winners": "View more winners"
+  },
+  "footer": {
+    "copyright": "All rights reserved.",
+    "terms": "Terms & Conditions",
+    "privacy": "Privacy Policy"
+  },
+  "login": {
+    "title": "Hello!",
+    "subtitle": "Log in to your account here",
+    "facebook_login": "Log in with Facebook",
+    "instagram_login": "Log in with Instagram",
+    "google_login": "Log in with Google",
+    "or_separator": "OR",
+    "email_placeholder": "Email",
+    "login_button": "Log In",
+    "no_account_text": "Don't have an account?",
+    "signup_link": "Sign up"
+  },
+  "raffle_detail": {
+    "draw_date_label": "Draw Date",
+    "status_label": "Status",
+    "status_active": "Active",
+    "about_raffle_label": "About this Raffle",
+    "participate_button": "Participate",
+    "back_to_raffles": "Back to Raffles",
+    "not_found_title": "Raffle Not Found",
+    "not_found_description": "Sorry, the raffle you are looking for does not exist or has been removed.",
+    "prize_label": "Prize",
+    "participation_period_label": "Participation Period",
+    "country_label": "Country",
+    "rules_label": "Contest Rules",
+    "view_rules_link": "View Rules"
+  },
+  "all_raffles": {
+    "title": "All Raffles",
+    "description": "Explore our complete list of raffles. Use search and filters to find yours.",
+    "search_placeholder": "Search raffles...",
+    "filter_status_label": "Filter by status",
+    "filter_country_label": "Filter by country",
+    "status_all": "All statuses",
+    "status_upcoming": "Upcoming",
+    "status_past": "Past",
+    "country_all": "All countries",
+    "no_raffles_found": "No raffles found matching your criteria.",
+    "table_name": "Name",
+    "table_draw_date": "Draw Date",
+    "table_status": "Status",
+    "table_country": "Country",
+    "table_action": "Action"
+  }
+}

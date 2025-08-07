@@ -1,0 +1,78 @@
+{
+  "header": {
+    "logo_alt": "Logo de Sorteos",
+    "nav_raffles": "Sorteos",
+    "nav_how_it_works": "¿Cómo funciona?",
+    "nav_contact": "Contacto",
+    "cta_button": "Agregar Sorteo"
+  },
+  "hero": {
+    "title": "Participa en Sorteos Emocionantes",
+    "description": "Descubre y únete a los sorteos más recientes. ¡Tu suerte te espera!",
+    "recent_raffles": "Sorteos Recientes",
+    "table_name": "Nombre",
+    "table_draw_date": "Fecha",
+    "table_action": "Acción",
+    "participate_button": "Ver",
+    "view_more_raffles": "Ver más sorteos"
+  },
+  "recent_winners": {
+    "title": "Ganadores Recientes",
+    "description": "Conoce a los afortunados ganadores de nuestros sorteos.",
+    "table_name": "Nombre del Sorteo",
+    "table_draw_date": "Fecha del Sorteo",
+    "table_winner": "Ganador",
+    "table_action": "Acción",
+    "view_button": "Ver",
+    "view_more_winners": "Ver más ganadores"
+  },
+  "footer": {
+    "copyright": "Todos los derechos reservados.",
+    "terms": "Términos y Condiciones",
+    "privacy": "Política de Privacidad"
+  },
+  "login": {
+    "title": "¡Hola!",
+    "subtitle": "Ingresa a tu cuenta aquí",
+    "facebook_login": "Ingresar con Facebook",
+    "instagram_login": "Ingresar con Instagram",
+    "google_login": "Ingresar con Google",
+    "or_separator": "O",
+    "email_placeholder": "Email",
+    "login_button": "Ingresar",
+    "no_account_text": "¿No tienes una cuenta?",
+    "signup_link": "Crear cuenta"
+  },
+  "raffle_detail": {
+    "draw_date_label": "Fecha del Sorteo",
+    "status_label": "Estado",
+    "status_active": "Activo",
+    "about_raffle_label": "Sobre este Sorteo",
+    "participate_button": "Participar",
+    "back_to_raffles": "Volver a Sorteos",
+    "not_found_title": "Sorteo no encontrado",
+    "not_found_description": "Lo sentimos, el sorteo que buscas no existe o ha sido eliminado.",
+    "prize_label": "Premio",
+    "participation_period_label": "Período de Participación",
+    "country_label": "País",
+    "rules_label": "Bases del Concurso",
+    "view_rules_link": "Ver Bases"
+  },
+  "all_raffles": {
+    "title": "Todos los Sorteos",
+    "description": "Explora nuestra lista completa de sorteos. Usa la búsqueda y los filtros para encontrar el tuyo.",
+    "search_placeholder": "Buscar sorteos...",
+    "filter_status_label": "Filtrar por estado",
+    "filter_country_label": "Filtrar por país",
+    "status_all": "Todos los estados",
+    "status_upcoming": "Próximos",
+    "status_past": "Pasados",
+    "country_all": "Todos los países",
+    "no_raffles_found": "No se encontraron sorteos que coincidan con tu búsqueda.",
+    "table_name": "Nombre",
+    "table_draw_date": "Fecha del Sorteo",
+    "table_status": "Estado",
+    "table_country": "País",
+    "table_action": "Acción"
+  }
+}
