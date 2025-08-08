@@ -105,14 +105,8 @@ async function getRaffleDetails(id: string): Promise<RaffleDetails | null> {
   return mockRaffles.find((raffle) => raffle.id === id) || null
 }
 
-export default async function RaffleDetailPage({
-  params,
-}: {
-  params: { lang: "es" | "en"; id: string }
-}) {
-  const resolvedParams = await params // Await params if it's a Promise
-  const lang = resolvedParams.lang
-  const id = resolvedParams.id
+export default async function RaffleDetailPage({ params }: { params: Promise<{ lang: "es" | "en"; id: string }> }) {
+  const { lang, id } = await params;
   const dict = await getDictionary(lang)
   const raffle = await getRaffleDetails(id)
 

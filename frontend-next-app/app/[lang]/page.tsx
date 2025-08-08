@@ -7,13 +7,8 @@ import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 
-export default async function HomePage({
-  params,
-}: {
-  params: { lang: "es" | "en" }
-}) {
-  const resolvedParams = await params // Await params if it's a Promise
-  const lang = resolvedParams.lang
+export default async function HomePage({ params }: { params: Promise<{ lang: "es" | "en" }> }) {
+  const { lang } = await params;
   const dict = await getDictionary(lang)
 
   return (

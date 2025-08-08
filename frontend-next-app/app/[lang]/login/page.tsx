@@ -6,13 +6,8 @@ import { getDictionary } from "../dictionaries"
 import { FacebookIcon, InstagramIcon, Mail } from "lucide-react" // Removed ChromeIcon
 import Image from "next/image" // Ensure Image is imported
 
-export default async function LoginPage({
-  params,
-}: {
-  params: { lang: "es" | "en" }
-}) {
-  const resolvedParams = await params // Await params if it's a Promise
-  const lang = resolvedParams.lang
+export default async function LoginPage({ params }: { params: Promise<{ lang: "es" | "en" }> }) {
+  const { lang } = await params;
   const dict = await getDictionary(lang)
 
   return (

@@ -5,13 +5,8 @@ import Footer from "@/components/footer"
 import AllRafflesClient from "@/components/all-raffles-client" // Import the new client component
 import { getAllRaffles } from "@/lib/raffles"
 
-export default async function AllRafflesPage({
-  params,
-}: {
-  params: { lang: "es" | "en" }
-}) {
-  const resolvedParams = await params // Await params if it's a Promise
-  const lang = resolvedParams.lang
+export default async function AllRafflesPage({ params }: { params: Promise<{ lang: "es" | "en" }> }) {
+  const { lang } = await params;
   const dict = await getDictionary(lang)
   const raffles = await getAllRaffles()
 
