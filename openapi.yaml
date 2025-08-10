@@ -1,0 +1,601 @@
+openapi: 3.1.0
+info:
+  title: OpenAPI Course
+  description: Specification for OpenAPI Course
+  termsOfService: http://example.com/terms/
+  contact:
+    name: Rodrigo Salgado
+    url: https://rsalgadoc.github.io/
+    email: rodrigo.salgado.cordova@gmail.com
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  version: "1.0"
+servers:
+- url: https://dev.example.com
+  description: Development Server
+- url: https://qa.example.com
+  description: QA Server
+- url: https://prod.example.com
+  description: Production Server
+paths:
+  /v1/raffle:
+    put:
+      tags:
+        - raffle
+      summary: Update an existing raffle.
+      description: Update an existing raffle by Id.
+      operationId: updateRaffle
+      requestBody:
+        description: Update an existent raffle in the store
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Raffle'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Raffle'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Raffle not found
+        '422':
+          description: Validation exception
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+      security:
+        - rafflestore_auth:
+            - write:raffles
+            - read:raffles
+    post:
+      tags:
+        - raffle
+      summary: Add a new raffle to the store.
+      description: Add a new raffle to the store.
+      operationId: addRaffle
+      requestBody:
+        description: Create a new raffle in the store
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Raffle'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Raffle'
+        '400':
+          description: Invalid input
+        '422':
+          description: Validation exception
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+      security:
+        - rafflestore_auth:
+            - write:raffles
+            - read:raffles
+  /v1/raffle/findByStatus:
+    get:
+      tags:
+        - raffle
+      summary: Finds Raffles by status.
+      description: Multiple status values can be provided with comma separated strings.
+      operationId: findRafflesByStatus
+      parameters:
+        - name: status
+          in: query
+          description: Status values that need to be considered for filter
+          required: false
+          explode: true
+          schema:
+            type: string
+            default: available
+            enum:
+              - available
+              - pending
+              - sold
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Raffle'
+        '400':
+          description: Invalid status value
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+      security:
+        - rafflestore_auth:
+            - write:raffles
+            - read:raffles
+  /v1/raffle/{raffleId}:
+    get:
+      tags:
+        - raffle
+      summary: Find raffle by ID.
+      description: Returns a single raffle.
+      operationId: getRaffleById
+      parameters:
+        - name: raffleId
+          in: path
+          description: ID of raffle to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Raffle'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Raffle'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Raffle not found
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+      security:
+        - api_key: []
+        - rafflestore_auth:
+            - write:raffles
+            - read:raffles
+    post:
+      tags:
+        - raffle
+      summary: Updates a raffle in the store with form data.
+      description: Updates a raffle resource based on the form data.
+      operationId: updateRaffleWithForm
+      parameters:
+        - name: raffleId
+          in: path
+          description: ID of raffle that needs to be updated
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: name
+          in: query
+          description: Name of raffle that needs to be updated
+          schema:
+            type: string
+        - name: status
+          in: query
+          description: Status of raffle that needs to be updated
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Raffle'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Raffle'
+        '400':
+          description: Invalid input
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+      security:
+        - rafflestore_auth:
+            - write:raffles
+            - read:raffles
+    delete:
+      tags:
+        - raffle
+      summary: Deletes a raffle.
+      description: Delete a raffle.
+      operationId: deleteRaffle
+      parameters:
+        - name: api_key
+          in: header
+          description: ''
+          required: false
+          schema:
+            type: string
+        - name: raffleId
+          in: path
+          description: Raffle id to delete
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Raffle deleted
+        '400':
+          description: Invalid raffle value
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+      security:
+        - rafflestore_auth:
+            - write:raffles
+            - read:raffles
+  /v1/user:
+    post:
+      tags:
+        - user
+      summary: Create user.
+      description: This can only be done by the logged in user.
+      operationId: createUser
+      requestBody:
+        description: Created user object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/User'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/User'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /v1/user/createWithList:
+    post:
+      tags:
+        - user
+      summary: Creates list of users with given input array.
+      description: Creates list of users with given input array.
+      operationId: createUsersWithListInput
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/User'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /v1/user/login:
+    get:
+      tags:
+        - user
+      summary: Logs user into the system.
+      description: Log into the system.
+      operationId: loginUser
+      parameters:
+        - name: username
+          in: query
+          description: The user name for login
+          required: false
+          schema:
+            type: string
+        - name: password
+          in: query
+          description: The password for login in clear text
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          headers:
+            X-Rate-Limit:
+              description: calls per hour allowed by the user
+              schema:
+                type: integer
+                format: int32
+            X-Expires-After:
+              description: date in UTC when token expires
+              schema:
+                type: string
+                format: date-time
+          content:
+            application/xml:
+              schema:
+                type: string
+            application/json:
+              schema:
+                type: string
+        '400':
+          description: Invalid username/password supplied
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /v1/user/logout:
+    get:
+      tags:
+        - user
+      summary: Logs out current logged in user session.
+      description: Log user out of the system.
+      operationId: logoutUser
+      parameters: []
+      responses:
+        '200':
+          description: successful operation
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /v1/user/{username}:
+    get:
+      tags:
+        - user
+      summary: Get user by user name.
+      description: Get user detail based on username.
+      operationId: getUserByName
+      parameters:
+        - name: username
+          in: path
+          description: The name that needs to be fetched. Use user1 for testing
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Invalid username supplied
+        '404':
+          description: User not found
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    put:
+      tags:
+        - user
+      summary: Update user resource.
+      description: This can only be done by the logged in user.
+      operationId: updateUser
+      parameters:
+        - name: username
+          in: path
+          description: name that need to be deleted
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Update an existent user in the store
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/User'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: bad request
+        '404':
+          description: user not found
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      tags:
+        - user
+      summary: Delete user resource.
+      description: This can only be done by the logged in user.
+      operationId: deleteUser
+      parameters:
+        - name: username
+          in: path
+          description: The name that needs to be deleted
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: User deleted
+        '400':
+          description: Invalid username supplied
+        '404':
+          description: User not found
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 10
+        username:
+          type: string
+          example: theUser
+        firstName:
+          type: string
+          example: John
+        lastName:
+          type: string
+          example: James
+        email:
+          type: string
+          example: john@email.com
+        password:
+          type: string
+          example: '12345'
+        phone:
+          type: string
+          example: '12345'
+        userStatus:
+          type: integer
+          description: User Status
+          format: int32
+          example: 1
+      xml:
+        name: user
+    Raffle:
+      required:
+        - name
+        - photoUrls
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 10
+          readOnly: true
+        description:
+          type: string
+          example: 'Discover and join the latest raffles. Your luck awaits!'
+        name:
+          type: string
+          example: doggie
+        country:
+          $ref: '#/components/schemas/Country'
+        status:
+          type: string
+          description: raffle status in the store
+          enum:
+            - active
+            - upcoming
+            - past
+      xml:
+        name: raffle
+    Country:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Afghanistan
+        alpha-2:
+          type: string
+          example: AF
+        alpha-3:
+          type: string
+          example: AFG
+        numeric:
+          type: string
+          example: 004
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      required:
+        - code
+        - message
+  requestBodies:
+    Raffle:
+      description: Raffle object that needs to be added to the store
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Raffle'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Raffle'
+    UserArray:
+      description: List of user object
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/User'
+  securitySchemes:
+    rafflestore_auth:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: https://rafflestore3.swagger.io/oauth/authorize
+          scopes:
+            "write:raffles": modify raffles in your account
+            "read:raffles": read your raffles
+    api_key:
+      type: apiKey
+      name: api_key
+      in: header
