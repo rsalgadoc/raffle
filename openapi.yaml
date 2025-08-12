@@ -526,21 +526,36 @@ components:
           format: int64
           example: 10
           readOnly: true
+        name:
+          type: string
+          example: 'Sorteo de Verano'
         description:
           type: string
           example: 'Discover and join the latest raffles. Your luck awaits!'
-        name:
+        prize:
           type: string
-          example: doggie
+          example: 'Barbacoa de alta gama, set de sillas de playa y nevera portátil.'
+        drawDate:
+          type: string
+          example: '2025-08-15'
         country:
           $ref: '#/components/schemas/Country'
         status:
           type: string
-          description: raffle status in the store
+          description: raffle status
           enum:
             - active
             - upcoming
             - past
+        imageUrl:
+          type: string
+          example: '/images/twitter-logo.png'
+        participationPeriod:
+          type: string
+          example: '1 de Julio a 14 de Agosto'
+        rulesUrl:
+          type: string
+          example: '#'
       xml:
         name: raffle
     Country:

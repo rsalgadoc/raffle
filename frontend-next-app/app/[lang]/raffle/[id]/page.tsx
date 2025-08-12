@@ -5,7 +5,8 @@ import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import Link from "next/link"
-
+import { notFound } from 'next/navigation';
+import { getRaffleById } from '@/api/sdk.gen';
 interface RaffleDetails {
   id: string
   name: string
@@ -105,10 +106,30 @@ async function getRaffleDetails(id: string): Promise<RaffleDetails | null> {
   return mockRaffles.find((raffle) => raffle.id === id) || null
 }
 
+
+
+async function getRaffle(id: string) {
+  const raffleId = Number.parseInt(id, 10);
+  const { data: raffle } = await getRaffleById({
+    cache: 'force-cache',
+    path: {
+      raffleId,
+    },
+    throwOnError: true,
+  });
+  if (!raffle) {
+    notFound();
+  }
+  return raffle;
+}
+
+
 export default async function RaffleDetailPage({ params }: { params: Promise<{ lang: "es" | "en"; id: string }> }) {
   const { lang, id } = await params;
   const dict = await getDictionary(lang)
   const raffle = await getRaffleDetails(id)
+
+  const raffleApi = await getRaffle(id);
 
   if (!raffle) {
     return (
@@ -147,7 +168,7 @@ export default async function RaffleDetailPage({ params }: { params: Promise<{ l
               <div className="flex flex-col text-center sm:text-left">
                 {" "}
                 {/* Grouped text and aligned left */}
-                <CardTitle className="text-3xl font-bold">{raffle.name}</CardTitle> {/* Adjusted font size */}
+                <CardTitle className="text-3xl font-bold">{raffle.name} - {raffleApi.name}</CardTitle> {/* Adjusted font size */}
                 <p className="text-muted-foreground mt-2">{raffle.description}</p>
               </div>
             </CardHeader>

@@ -51,3 +51,6 @@ TypeScript
       }
     }
 AI responses may include mistakes. Learn more
+
+
+npm run openapi-ts
